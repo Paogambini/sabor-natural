@@ -2,17 +2,20 @@ import { FaShoppingCart } from "react-icons/fa";
 
 const CartWidget = () => {
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '6px',
-      cursor: 'pointer'
-    }}>
-      <FaShoppingCart size={20} color="#fff" />
-      <span style={{
-        fontWeight: 'bold',
-        color: '#fff'
-      }}>3</span>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "6px",
+        cursor: "pointer",
+        padding: "0.3rem 0.6rem",
+        backgroundColor: "#6a7345",
+        borderRadius: "8px",
+        color: "#fff",
+      }}
+    >
+      <FaShoppingCart size={20} />
+      <span style={{ fontWeight: "bold" }}>3</span>
     </div>
   );
 };

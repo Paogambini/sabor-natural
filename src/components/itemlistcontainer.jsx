@@ -1,30 +1,49 @@
-const ItemListContainer = ({ mensaje }) => {
-  const lineas = mensaje.split('\n');
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ItemList from "./itemlist";
+import { getProductos, getProductosByCategoria } from "../data/products";
+
+const ItemListContainer = ({ saludo }) => {
+  const [items, setItems] = useState([]);
+  const { categoriaId } = useParams();
+
+  useEffect(() => {
+    if (categoriaId) {
+      getProductosByCategoria(categoriaId).then((data) => setItems(data));
+    } else {
+      getProductos().then((data) => setItems(data));
+    }
+  }, [categoriaId]);
 
   return (
-    <section style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: 'calc(100vh - 80px)',
-      width: '100vw',
-      fontFamily: 'sans-serif',
-      color: '#444',
-      textAlign: 'center',
-      flexDirection: 'column'
-    }}>
-      {lineas.map((linea, index) => (
-        <h2 key={index} style={{
-          fontSize: '2rem',
-          fontWeight: '500',
-          margin: '5px 0'
-        }}>
-          {linea}
-        </h2>
-      ))}
+    <section
+      style={{
+        padding: "2rem",
+        textAlign: "center",
+        minHeight: "calc(100vh - 200px)", 
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch"
+      }}
+    >
+      {saludo &&
+        saludo.split("\n").map((linea, i) => (
+          <h2
+            key={i}
+            style={{
+              margin: "0.5rem 0",
+              color: "#002244",
+              fontWeight: 600,
+              fontSize: "1.5rem"
+            }}
+          >
+            {linea}
+          </h2>
+        ))}
+
+      <ItemList items={items} />
     </section>
   );
 };
 
 export default ItemListContainer;
-
