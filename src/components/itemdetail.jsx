@@ -1,24 +1,24 @@
-import ItemCount from "./itemcount";
+import { useState } from "react";
+import { useCart } from "../context/cartcontext";
+import ItemCount from "./ItemCount";
 
 const ItemDetail = ({ item }) => {
-  const onAdd = (cantidad) => {
-    alert(`Agregaste ${cantidad} ${item.nombre} al carrito`);
+  const { nombre, precio, imagen, descripcion, stock } = item;
+  const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const handleAdd = (quantity) => {
+    addToCart({ ...item, quantity });
+    setAdded(true);
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      gap: '2rem',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <img src={item.imagen} alt={item.nombre} style={{ width: '200px', borderRadius: '1rem' }} />
-      <div>
-        <h2>{item.nombre}</h2>
-        <p>{item.descripcion}</p>
-        <p><strong>${item.precio}</strong></p>
-        <ItemCount stock={10} initial={1} onAdd={onAdd} />
-      </div>
+    <div style={{ textAlign: "center" }}>
+      <img src={imagen} alt={nombre} style={{ width: "300px", borderRadius: "8px" }} />
+      <h2>{nombre}</h2>
+      <p>{descripcion}</p>
+      <p style={{ fontWeight: "bold" }}>${precio}</p>
+      {added ? <p>Producto agregado al carrito ✅</p> : <ItemCount stock={stock} onAdd={handleAdd} />}
     </div>
   );
 };

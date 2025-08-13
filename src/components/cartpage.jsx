@@ -1,6 +1,7 @@
 import { useCart } from "../context/cartcontext";
+import { Link } from "react-router-dom";
 
-const cartpage = () => {
+const CartPage = () => {
   const { cart, removeFromCart, clearCart } = useCart();
 
   if (cart.length === 0) {
@@ -27,6 +28,7 @@ const cartpage = () => {
           <button onClick={() => removeFromCart(item.id)}>❌</button>
         </div>
       ))}
+
       <button
         onClick={clearCart}
         style={{
@@ -36,12 +38,28 @@ const cartpage = () => {
           marginTop: "1rem",
           border: "none",
           borderRadius: "5px",
+          marginRight: "1rem"
         }}
       >
         Vaciar carrito
       </button>
+
+      <Link to="/checkout">
+        <button
+          style={{
+            background: "#5a623d",
+            color: "#fff",
+            padding: "0.5rem 1rem",
+            border: "none",
+            borderRadius: "5px",
+            marginTop: "1rem"
+          }}
+        >
+          Finalizar compra
+        </button>
+      </Link>
     </div>
   );
 };
 
-export default cartpage;
+export default CartPage;

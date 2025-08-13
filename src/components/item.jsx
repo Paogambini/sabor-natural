@@ -38,7 +38,7 @@ const Item = ({ item }) => {
       <p style={{ marginBottom: "1rem", fontWeight: "bold" }}>${precio}</p>
 
       <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginTop: "auto" }}>
-        <Link to={`/products/${id}`}>
+        <Link to={`/item/${id}`}>
           <button
             style={{
               background: "#5a623d",
