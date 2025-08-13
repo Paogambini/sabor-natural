@@ -1,6 +1,6 @@
 import { FaShoppingCart } from "react-icons/fa";
 
-const CartWidget = () => {
+const CartWidget = ({ quantity }) => {
   return (
     <div
       style={{
@@ -15,7 +15,7 @@ const CartWidget = () => {
       }}
     >
       <FaShoppingCart size={20} />
-      <span style={{ fontWeight: "bold" }}>3</span>
+      <span style={{ fontWeight: "bold" }}>{quantity}</span>
     </div>
   );
 };

@@ -1,6 +1,10 @@
 import Item from "./item";
 
 const ItemList = ({ items }) => {
+  if (!items || items.length === 0) {
+    return <p>cargando productos...</p>;
+  }
+
   return (
     <div
       style={{

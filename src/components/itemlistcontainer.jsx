@@ -1,49 +1,33 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import ItemList from "./itemlist";
-import { getProductos, getProductosByCategoria } from "../data/products";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+import ItemList from "./ItemList";
 
-const ItemListContainer = ({ saludo }) => {
+function ItemListContainer({ saludo }) {
   const [items, setItems] = useState([]);
-  const { categoriaId } = useParams();
 
   useEffect(() => {
-    if (categoriaId) {
-      getProductosByCategoria(categoriaId).then((data) => setItems(data));
-    } else {
-      getProductos().then((data) => setItems(data));
-    }
-  }, [categoriaId]);
+    const productosRef = collection(db, "productos");
+
+    getDocs(productosRef)
+      .then((snapshot) => {
+        const productos = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setItems(productos);
+      })
+      .catch((error) => {
+        console.error("Error al obtener productos:", error);
+      });
+  }, []);
 
   return (
-    <section
-      style={{
-        padding: "2rem",
-        textAlign: "center",
-        minHeight: "calc(100vh - 200px)", 
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch"
-      }}
-    >
-      {saludo &&
-        saludo.split("\n").map((linea, i) => (
-          <h2
-            key={i}
-            style={{
-              margin: "0.5rem 0",
-              color: "#002244",
-              fontWeight: 600,
-              fontSize: "1.5rem"
-            }}
-          >
-            {linea}
-          </h2>
-        ))}
-
+    <div>
+      <h2>{saludo}</h2>
       <ItemList items={items} />
-    </section>
+    </div>
   );
-};
+}
 
 export default ItemListContainer;

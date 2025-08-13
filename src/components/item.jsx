@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/cartcontext"; 
 
 const Item = ({ item }) => {
   const { nombre, precio, imagen, id } = item;
+  const { addToCart } = useCart(); 
 
   return (
     <div
       style={{
-        flex: "1 1 250px",        
-        maxWidth: "300px",         
+        flex: "1 1 250px",
+        maxWidth: "300px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -23,7 +25,6 @@ const Item = ({ item }) => {
     >
       <img
         src={imagen}
-        alt={nombre}
         style={{
           width: "100%",
           height: "180px",
@@ -32,10 +33,11 @@ const Item = ({ item }) => {
           marginBottom: "1rem"
         }}
       />
+            
       <h4 style={{ margin: "0 0 0.5rem" }}>{nombre}</h4>
       <p style={{ marginBottom: "1rem", fontWeight: "bold" }}>${precio}</p>
 
-      <div style={{ marginTop: "auto" }}>
+      <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginTop: "auto" }}>
         <Link to={`/products/${id}`}>
           <button
             style={{
@@ -50,6 +52,20 @@ const Item = ({ item }) => {
             Ver detalle
           </button>
         </Link>
+
+        <button
+          onClick={() => addToCart(item)}
+          style={{
+            background: "#000000ff",
+            color: "#fff",
+            border: "none",
+            padding: "0.5rem 1rem",
+            borderRadius: "6px",
+            cursor: "pointer"
+          }}
+        >
+          🛒
+        </button>
       </div>
     </div>
   );

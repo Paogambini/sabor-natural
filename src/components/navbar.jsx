@@ -1,8 +1,11 @@
-import CartWidget from "./cartwidget";
+import CartWidget from "./CartWidget";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/cartcontext"; 
 
 const NavBar = () => {
+  const { cartQuantity } = useCart(); 
+
   return (
     <nav
       style={{
@@ -14,12 +17,12 @@ const NavBar = () => {
         fontFamily: "sans-serif",
         width: "100%",
         boxSizing: "border-box",
-        position: "sticky", // opcional: se queda arriba al hacer scroll
+        position: "sticky",
         top: 0,
         zIndex: 1000,
       }}
     >
-      {/* Logo */}
+
       <Link to="/">
         <img
           src={logo}
@@ -33,33 +36,32 @@ const NavBar = () => {
         />
       </Link>
 
-      {/* Menú de navegación */}
       <div style={{ display: "flex", gap: "1.5rem" }}>
         <Link
           to="/categoria/budines"
           style={{ textDecoration: "none", color: "#fff", fontWeight: "bold" }}
         >
-          Budines
+          tartas
         </Link>
         <Link
           to="/categoria/alfajores"
           style={{ textDecoration: "none", color: "#fff", fontWeight: "bold" }}
         >
-          Alfajores
+          alfajores
         </Link>
         <Link
           to="/categoria/cookies"
           style={{ textDecoration: "none", color: "#fff", fontWeight: "bold" }}
         >
-          Cookies
+          cookies
         </Link>
       </div>
 
-      {/* Carrito */}
-      <CartWidget />
+      <Link to="/cart" style={{ textDecoration: "none" }}>
+        <CartWidget quantity={cartQuantity} />
+      </Link>
     </nav>
   );
 };
 
 export default NavBar;
-
